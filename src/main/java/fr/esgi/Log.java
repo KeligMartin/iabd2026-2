@@ -2,7 +2,7 @@ package fr.esgi;
 
 import java.time.LocalDateTime;
 
-public class Log {
+public class Log implements ILog {
 
     private String message;
     private String action;
@@ -60,4 +60,12 @@ public class Log {
         this.level = level;
     }
 
+    public boolean isSuccess() {
+        return this.getLevel() != LEVEL.ERROR;
+    }
+
+    @Override
+    public boolean isError() {
+        return !this.isSuccess();
+    }
 }

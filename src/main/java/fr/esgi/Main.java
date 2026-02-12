@@ -12,22 +12,19 @@ public class Main {
         Log log2 = new Log();
         log2.setLevel(LEVEL.INFO);
 
-        System.out.println(log2);
-        System.out.println(log);
         log.setLevel(LEVEL.INFO);
-
-
-        Log[] logs = new Log[2];
-        logs[0] = log;
-        logs[1] = log2;
-
         List<Log> logList = new ArrayList<>();
         logList.add(log);
         logList.add(log2);
+        List<Log> successLogs = new ArrayList<>();
+        var successCount = 0;
 
         for (Log current : logList) {
-            System.out.println(current);
+           if (current.isSuccess()) {
+               successLogs.add(current);
+               successCount++;
+           }
         }
+        System.out.println(successLogs);
     }
-
 }
