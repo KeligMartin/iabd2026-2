@@ -1,7 +1,6 @@
 package fr.esgi;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Main {
 
@@ -16,15 +15,22 @@ public class Main {
         List<Log> logList = new ArrayList<>();
         logList.add(log);
         logList.add(log2);
-        List<Log> successLogs = new ArrayList<>();
-        var successCount = 0;
+        logList.add(log);
 
-        for (Log current : logList) {
-           if (current.isSuccess()) {
-               successLogs.add(current);
-               successCount++;
-           }
-        }
-        System.out.println(successLogs);
+        System.out.println(logList);
+
+        Set<Log> logSet = new HashSet<>();
+        logSet.add(log);
+        logSet.add(log2);
+        System.out.println(logSet.add(log));
+        System.out.println(logSet);
+
+
+        Map<LEVEL, Integer> logByLevel = new HashMap<>();
+        logByLevel.put(LEVEL.INFO, 10);
+        logByLevel.put(LEVEL.WARN, 6);
+        logByLevel.put(LEVEL.ERROR, 4012);
+
+        System.out.println(logByLevel);
     }
 }
