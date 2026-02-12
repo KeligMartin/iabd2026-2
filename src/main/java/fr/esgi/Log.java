@@ -2,30 +2,24 @@ package fr.esgi;
 
 import java.time.LocalDateTime;
 
-public class Log implements ILog {
+public class Log<T extends Readable> implements ILog {
 
-    private String message;
+    private T source;
     private String action;
     private LocalDateTime timestamp;
-    private Integer code;
     private LEVEL level;
 
-    public Log(String message, String action, LocalDateTime timestamp, Integer code, LEVEL level) {
-        this.message = message;
+    public Log(T source, String action, LocalDateTime timestamp, LEVEL level) {
+        this.source = source;
         this.action = action;
         this.timestamp = timestamp;
-        this.code = code;
         this.level = level;
     }
 
     public Log() {}
 
     public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
+        return this.source.getBody();
     }
 
     public String getAction() {
@@ -42,14 +36,6 @@ public class Log implements ILog {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
     }
 
     public LEVEL getLevel() {
