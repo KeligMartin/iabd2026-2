@@ -4,22 +4,43 @@ import java.time.LocalDateTime;
 
 public class Log<T extends Readable> implements ILog {
 
+    private final Integer MAX_BODY_LENGTH = 50;
+
     private T source;
     private String action;
     private LocalDateTime timestamp;
     private LEVEL level;
+    private String message;
 
-    public Log(T source, String action, LocalDateTime timestamp, LEVEL level) {
+    public Log(T source, String action, LEVEL level) {
         this.source = source;
         this.action = action;
-        this.timestamp = timestamp;
         this.level = level;
+        try {
+            this.setMessage();
+        } catch (TooLongBodyException e) {
+            this.message = source.getBody().substring(0, MAX_BODY_LENGTH);
+        }
+        try {
+            this.setTimestamp();
+        } catch (FutureTimeStampException e) {
+            System.out.println(String.format("Le timestamp de %s est dans le futur", source.getTimestamp()));
+            this.timestamp = LocalDateTime.now();
+            System.out.println("Timestamp réparé");
+        }
     }
 
     public Log() {}
 
     public String getMessage() {
-        return this.source.getBody();
+        return this.message;
+    }
+
+    public void setMessage() {
+        if (this.source.getBody().length() > MAX_BODY_LENGTH) {
+            throw new TooLongBodyException("Le message est trop long");
+        }
+        this.message = source.getBody();
     }
 
     public String getAction() {
@@ -30,12 +51,15 @@ public class Log<T extends Readable> implements ILog {
         this.action = action;
     }
 
-    public LocalDateTime getTimestamp() {
+    public LocalDateTime getTimestamp() throws RuntimeException {
         return timestamp;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
+    public void setTimestamp() {
+        if(source.getTimestamp().isAfter(LocalDateTime.now())) {
+            throw new FutureTimeStampException("Le timestamp ne peut pas être dans le futur");
+        }
+        this.timestamp = source.getTimestamp();
     }
 
     public LEVEL getLevel() {
@@ -53,18 +77,5 @@ public class Log<T extends Readable> implements ILog {
     @Override
     public boolean isError() {
         return !this.isSuccess();
-    }
-
-
-    public boolean learn() {
-        Double rand = Math.random();
-        System.out.println("hmmm j'adore apprendre");
-        if(rand > 0.5) {
-            throw new RuntimeException("erreur");
-        }
-        if (rand > 1) {
-            throw new ArithmeticException("tricheur");
-        }
-        return true;
     }
 }

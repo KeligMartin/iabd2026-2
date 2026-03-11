@@ -1,16 +1,28 @@
 package fr.esgi;
 
+import java.time.LocalDateTime;
+
 public abstract class Readable {
 
     protected String body;
+    private LocalDateTime timestamp;
 
     public Readable(String body) {
         this.body = body;
+        this.timestamp = LocalDateTime.now();
     }
 
     public abstract String getBody();
 
-    public String getHttpStatus() {
-        return "";
+    public Integer getHttpStatus() {
+        return null;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
     }
 }
