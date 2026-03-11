@@ -78,4 +78,8 @@ public class Log<T extends Readable> implements ILog {
     public boolean isError() {
         return !this.isSuccess();
     }
+
+    public void greet() {
+        System.out.println("Hello World !");
+    }
 }
