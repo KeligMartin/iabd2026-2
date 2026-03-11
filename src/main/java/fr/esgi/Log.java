@@ -54,4 +54,17 @@ public class Log<T extends Readable> implements ILog {
     public boolean isError() {
         return !this.isSuccess();
     }
+
+
+    public boolean learn() {
+        Double rand = Math.random();
+        System.out.println("hmmm j'adore apprendre");
+        if(rand > 0.5) {
+            throw new RuntimeException("erreur");
+        }
+        if (rand > 1) {
+            throw new ArithmeticException("tricheur");
+        }
+        return true;
+    }
 }

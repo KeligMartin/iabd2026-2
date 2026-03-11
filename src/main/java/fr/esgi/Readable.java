@@ -9,4 +9,8 @@ public abstract class Readable {
     }
 
     public abstract String getBody();
+
+    public String getHttpStatus() {
+        return "";
+    }
 }
