@@ -24,9 +24,7 @@ public class Log<T extends Readable> implements ILog {
         try {
             this.setTimestamp();
         } catch (FutureTimeStampException e) {
-            System.out.println(String.format("Le timestamp de %s est dans le futur", source.getTimestamp()));
             this.timestamp = LocalDateTime.now();
-            System.out.println("Timestamp réparé");
         }
     }
 
@@ -81,5 +79,9 @@ public class Log<T extends Readable> implements ILog {
 
     public void greet() {
         System.out.println("Hello World !");
+    }
+
+    public T getSource() {
+        return source;
     }
 }

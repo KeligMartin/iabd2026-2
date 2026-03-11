@@ -15,7 +15,7 @@ public abstract class Readable {
     public abstract String getBody();
 
     public Integer getHttpStatus() {
-        return null;
+        return 0;
     }
 
     public LocalDateTime getTimestamp() {
